@@ -1,0 +1,50 @@
+<!-- Template Driven Form -->
+<form #addCustomerForm="ngForm" (submit)="addCustomer(addCustomerForm)">
+  <!-- İsim 5 karakterden fazla olmalı ve isim girmek zorunlu olacak. -->
+  <input
+    type="text"
+    [(ngModel)]="firstname"
+    name="firstname"
+    required
+    minlength="5"
+  />
+  <br />
+  <!-- Eğer checkbox işaretlenmezse butonumuz disabled olacak. -->
+  <input type="checkbox" [(ngModel)]="terms" name="terms" required /> Şartları
+  okudum kabul ediyorum.
+  <br />
+  <div>
+    <select
+      class="form-select mb-3 select"
+      [(ngModel)]="customerType"
+      name="customerType"
+      aria-label="Default select example"
+      required
+    >
+      <option value="1">Premium</option>
+      <option value="2">Standart</option>
+    </select>
+  </div>
+  <br />
+  <textarea
+    class="form-control"
+    [(ngModel)]="description"
+    name="description"
+    cols="20"
+    rows="5"
+  ></textarea>
+  <br />
+  <button
+    class="mt-2 btn btn-primary"
+    [disabled]="!addCustomerForm.valid"
+    type="submit"
+  >
+    Müşteri Ekle
+  </button>
+  <button class="btn btn-link" (click)="resetForm(addCustomerForm)">
+    Formu temizle
+  </button>
+  <button class="btn btn-link" (click)="setValues(addCustomerForm)">
+    Alanları standart şekilde doldur
+  </button>
+</form>

@@ -1,0 +1,89 @@
+<!-- Reactive Forms
+ng-valid, ng-invalid, ng-pending, ng-prestine, ng-dirty, ng-touched, ng-untouched -->
+<div class="container">
+  <Form [formGroup]="addLoansTypeForm">
+    <label for="loanName">Kredi Adı</label><br />
+    <input type="text" formControlName="loanName" id="loanName" /><br />
+    <div
+      class="text-danger"
+      *ngIf="
+        addLoansTypeForm.get('loanName').hasError('required') &&
+        addLoansTypeForm.get('loanName').touched
+      "
+    >
+      Bu alan zorunludur.
+    </div>
+    <div
+      class="text-danger"
+      *ngIf="
+        addLoansTypeForm.get('loanName').hasError('minlength') &&
+        addLoansTypeForm.get('loanName').touched
+      "
+    >
+      En az 5 karakter olmalıdır.
+    </div>
+    <div
+      class="text-danger"
+      *ngIf="
+        addLoansTypeForm.get('loanName').hasError('maxlength') &&
+        addLoansTypeForm.get('loanName').touched
+      "
+    >
+      En fazla 20 karakter olmalıdır.
+    </div>
+
+    <label for="loanType">Kredi Türü</label><br />
+    <input type="text" formControlName="loanType" id="loanType" /><br />
+    <label for="loanDescription">Kredi Açıklama</label><br />
+    <textarea formControlName="loanDescription" id="loanDescription"></textarea
+    ><br />
+
+    <!-- <div class="form-group mt-5 mb-3" formArrayName="users">
+      <label>Kullanıcılar</label>
+      <div
+        *ngFor="
+          let control of addLoansTypeForm.controls.users['controls'];
+          let i = index
+        "
+      >
+        <input class="mb-1" type="text" [formControlName]="i" />
+      </div>
+    </div> -->
+    <div class="form-group mt-5 mb-3" formArrayName="users">
+      <label>Kullanıcılar</label>
+      <div
+        *ngFor="
+          let control of addLoansTypeForm.controls.users['controls'];
+          let i = index
+        "
+        [formGroupName]="i"
+      >
+        <label>İsim</label><br />
+        <input class="mb-1" type="text" formControlName="name" /><br />
+        <label>Yaş</label><br />
+        <input
+          class="mb-1"
+          type="text"
+          formControlName="age"
+          (blur)="assignDept(i)"
+        /><br />
+        <label>Departman</label><br />
+        <input class="mb-1" type="text" formControlName="dept" />
+        <button (click)="removeUser(i)">Sil</button>
+      </div>
+    </div>
+    <button
+      class="btn btn-primary"
+      [disabled]="!addLoansTypeForm.valid"
+      (click)="addLoanType()"
+    >
+      Kaydet
+    </button>
+    <button class="btn btn-primary ms-2" (click)="resetForm()">
+      Formu Temizle
+    </button>
+    <button class="btn btn-primary ms-2" (click)="addUser()">
+      Yeni Kullanıcı Ekle
+    </button>
+  </Form>
+</div>
